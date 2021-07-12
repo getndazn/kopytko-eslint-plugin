@@ -1,0 +1,40 @@
+{
+  "name": "@kopytko/eslint-plugin",
+  "version": "1.0.0",
+  "description": "Additional kopytko rules for eslint",
+  "main": "src/index.js",
+  "keywords": [
+    "brightscript",
+    "eslint",
+    "kopytko",
+    "lint",
+    "roku"
+  ],
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@roku-road/bright": "^1.2.13"
+  },
+  "contributors": [
+    {
+      "name": "Paweł Hertman",
+      "email": "pawel@hertman.eu",
+      "url": "http://hertman.eu/"
+    },
+    {
+      "name": "Radosław Zambrowski",
+      "email": "radekzam@gmail.com"
+    },
+    {
+      "name": "Tomasz Rejment",
+      "email": "tomasz.rejment@dazn.com"
+    },
+    {
+      "name": "Błażej Chełkowski",
+      "email": "blazej.chelkowski@dazn.com"
+    }
+  ],
+  "license": "UNLICENSED",
+  "private": true
+}
