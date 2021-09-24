@@ -3,7 +3,7 @@ const MESSAGE = 'missingComma';
 const meta = {
   docs: {
     category: 'Stylistic Issues',
-    description: 'Check that property of associative array is followed by comma when associative array definition is multiline or property is not the last one',
+    description: 'Enforces a trailing comma after every property of multiline associative array',
     recommended: true,
   },
   fixable: 'code',
