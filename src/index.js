@@ -3,8 +3,8 @@ const getRules = require('./get-rules');
 
 const configs = {
   recommended: {
-    parser: "@kopytko/eslint-plugin",
-    plugins: ['@kopytko', 'roku'],
+    parser: "@dazn/eslint-plugin-kopytko",
+    plugins: ['@dazn/kopytko', 'roku'],
     rules: {},
   },
 };

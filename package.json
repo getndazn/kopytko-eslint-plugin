@@ -1,5 +1,5 @@
 {
-  "name": "@dazn/kopytko-eslint-plugin",
+  "name": "@dazn/eslint-plugin-kopytko",
   "version": "0.0.1",
   "description": "Set of brightscript rules for eslint",
   "main": "src/index.js",

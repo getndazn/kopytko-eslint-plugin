@@ -9,9 +9,9 @@ An ESLint plugin with a set of rules
 npm i eslint --save-dev
 ```
 
-2. Install `kopytko-eslint-plugin`:
+2. Install `eslint-plugin-kopytko`:
 ```bash
-npm i @dazn/kopytko-eslint-plugin --save-dev
+npm i @dazn/eslint-plugin-kopytko --save-dev
 ```
 
 ## Configuration
@@ -19,12 +19,12 @@ npm i @dazn/kopytko-eslint-plugin --save-dev
 In `.eslintrc`:
 ```json
 {
-  "extends": "plugin:@kopytko/recommended",
-  "plugins": ["@kopytko"],
+  "extends": "plugin:@dazn/kopytko/recommended",
+  "plugins": ["@dazn/kopytko"],
   "rules": {
-    "@kopytko/dependencies-order": "error",
-    "@kopytko/indent": ["error", 2],
-    "@kopytko/missing-trailing-comma": "error"
+    "@dazn/kopytko/dependencies-order": "error",
+    "@dazn/kopytko/missing-trailing-comma": "error",
+    "@dazn/kopytko/indent": ["error", 2],
   }
 }
 ```
