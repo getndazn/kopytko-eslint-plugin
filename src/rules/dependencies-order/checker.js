@@ -1,8 +1,6 @@
 const { messageId } = require('./consts'); 
 
-const IMPORT_DEFINITION_KEY = '@import';
-const DEPENDENCY_URI_REGEX = /^@(import|mock)\s+(?:pkg:)?(\/[\w-/.]+\.brs)\s*$/;
-const MOCK_DEFINITION_KEY = '@mock';
+const DEPENDENCY_URI_REGEX = /^@(import|mock)\s+(?:pkg:)?(\/[\w-/.]+\.brs)\s*(?:(?:from\s+)([\w-@/.]+\s*))?$/;
 
 module.exports = class DependenciesOrderChecker {
   constructor(context) {
@@ -26,14 +24,32 @@ module.exports = class DependenciesOrderChecker {
       if (line.type !== 'Comment') {
         return dependencyEntries;
       }
-      if (!line.value.includes(IMPORT_DEFINITION_KEY) && !line.value.includes(MOCK_DEFINITION_KEY)) {
+
+      const dependency = this._getDependency(line.value)
+      if (!dependency) {
         return dependencyEntries;
       }
 
-      dependencyEntries.push(line.value);
+      dependencyEntries.push(dependency);
     }
 
     return dependencyEntries;
+  }
+
+  _getDependency(dependencyText) {
+    const parts = dependencyText.match(DEPENDENCY_URI_REGEX);
+
+    if (parts) {
+      const [_, definitionKey, filePath, packageName] = parts;
+
+      return {
+        definitionKey,
+        filePath,
+        packageName,
+      };
+    }
+
+    return parts;
   }
 
   _reportViolation(node) {
@@ -45,38 +61,45 @@ module.exports = class DependenciesOrderChecker {
 
   _sortDependencies(dependencies) {
     dependencies.sort((a, b) => {
-      const isAMock = a.includes(MOCK_DEFINITION_KEY);
-      const isBMock = b.includes(MOCK_DEFINITION_KEY);
-
-      if (isAMock !== isBMock) {
-        return isAMock ? 1 : -1;
+      if (a.packageName !== b.packageName && (!a.packageName || !b.packageName)) {
+        return this._moveExternalDependenciesBeforeLocal(a.packageName, b.packageName);
       }
 
-      const aUri = (a.match(DEPENDENCY_URI_REGEX) || [''])[0];
-      const bUri = (b.match(DEPENDENCY_URI_REGEX) || [''])[0];
-
-      const aParts = aUri.split('/');
-      const bParts = bUri.split('/');
-
-      let i = 0;
-      while (aParts[i]) {
-        const aPart = aParts[i];
-        const bPart = bParts[i];
-
-        if (aPart === bPart) {
-          i++;
-        } else {
-          if (aParts[i+1] && !bParts[i+1]) {
-            return 1;
-          } else if (!aParts[i+1] && bParts[i+1]) {
-            return -1;
-          }
-
-          return a.toLowerCase().localeCompare(b.toLowerCase());
-        }
+      if (a.definitionKey !== b.definitionKey) {
+        return this._orderDefinitionKeysAlphabetically(a.definitionKey, b.definitionKey);
       }
+
+      if (a.packageName !== b.packageName) {
+        return this._orderPackageNamesAlphabetically(a.packageName, b.packageName);
+      }
+
+      return this._orderFileNamesAlphabetically(a.filePath, b.filePath);
     });
   
     return dependencies;
+  }
+
+  _moveExternalDependenciesBeforeLocal(packageNameA, packageNameB) {
+    if (!packageNameA) {
+      return 1;
+    }
+
+    if (!packageNameB) {
+      return -1;
+    }
+
+    return 1;
+  }
+
+  _orderDefinitionKeysAlphabetically(definitionKeyA, definitionKeyB) {
+    return definitionKeyA.localeCompare(definitionKeyB);
+  }
+
+  _orderPackageNamesAlphabetically(packageNameA, packageNameB) {
+    return packageNameA.localeCompare(packageNameB);
+  }
+
+  _orderFileNamesAlphabetically(filePathA, filePathB) {
+    return filePathA.toLowerCase().localeCompare(filePathB.toLowerCase());
   }
 }
