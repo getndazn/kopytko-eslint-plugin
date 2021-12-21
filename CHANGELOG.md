@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/getndazn/kopytko-eslint-plugin/compare/v1.0.0...v2.0.0) (2021-12-21)
+
+
+### Bug Fixes
+
+* imports order in .brs files stopped working ([#8](https://github.com/getndazn/kopytko-eslint-plugin/issues/8)) ([374feaa](https://github.com/getndazn/kopytko-eslint-plugin/commit/374feaaffd08d3b03b638127d052a22002998f2a))
+
+
+### BREAKING CHANGES
+
+* Changed order of imports
+
 # 1.0.0 (2021-09-24)
 
 
