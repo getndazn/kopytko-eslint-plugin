@@ -20,86 +20,13 @@ In `.eslintrc`:
 ```json
 {
   "extends": "plugin:@dazn/kopytko/recommended",
-  "plugins": ["@dazn/kopytko"],
-  "rules": {
-    "@dazn/kopytko/dependencies-order": "error",
-    "@dazn/kopytko/missing-trailing-comma": "error",
-    "@dazn/kopytko/indent": ["error", 2],
-  }
+  "plugins": ["@dazn/kopytko"]
 }
 ```
 
 ## Rules
 
-### indent
-
-Enforces consistent indentation of block, array and object expressions, and function declarations
-
-Examples of **incorrect** code for this rule, set to 2 characters:
-```brightscript
-sub test()
-  example = [
-  1,
-    2,
-  ]
-  if (1 = 1)
-  superFunction({
-    a: "a",
-  b: "b",
-      c: "c",
-  })
-  end if
-end sub
-
-  sub another()
-  superFunction({})
-  end sub
-```
-
-Examples of **correct** code for this rule, set to 2 characters:
-```brightscript
-sub test()
-  example = [
-    1,
-    2,
-  ]
-  if (1 = 1)
-    superFunction({
-      a: "a",
-      b: "b",
-      c: "c",
-    })
-  end if
-end sub
-
-sub another()
-  superFunction({})
-end sub
-```
-
-### missing-trailing-comma
-
-Enforces a trailing comma after every property of multiline associative array
-
-The `--fix` option on the command line can automatically fix some of the problems reported by this rule.
-
-Examples of **incorrect** code for this rule:
-```brightscript
-test = {
-  a: "a",
-  b: "b"
-}
-```
-
-Examples of **correct** code for this rule:
-```brightscript
-test = {
-  a: "a",
-  b: "b",
-}
-```
-
-### dependencies-order
+### @dazn/kopytko/dependencies-order
 
 A rule to use with [Kopytko Packager](https://github.com/getndazn/kopytko-packager) 's importing mechanism
 and [Kopytko Unit Testing Framework](https://github.com/getndazn/kopytko-unit-testing-framework) 's mocking mechanism.
@@ -193,6 +120,132 @@ Example of **correct** code:
 ' @mock /components/some-mocked-function.brs
 ```
 
+### @dazn/kopytko/function-no-return
 
-## Recommendation
-We recommend to use also [eslint-plugin-roku](https://www.npmjs.com/package/eslint-plugin-roku) rules
+Check if function with defined return type has `return` statement.
+
+Examples of **incorrect** code for this rule:
+```brightscript
+function calc() as Integer
+  result = 1 + 2
+end function
+```
+
+Examples of **correct** code for this rule:
+```brightscript
+function calc() as Integer
+  result = 1 + 2
+  return result
+end function
+```
+
+### @dazn/kopytko/indent
+
+Enforces consistent indentation of block, array and object expressions, and function declarations
+
+Examples of **incorrect** code for this rule, set to 2 characters:
+```brightscript
+sub test()
+  example = [
+  1,
+    2,
+  ]
+  if (1 = 1)
+  superFunction({
+    a: "a",
+  b: "b",
+      c: "c",
+  })
+  end if
+end sub
+
+  sub another()
+  superFunction({})
+  end sub
+```
+
+Examples of **correct** code for this rule, set to 2 characters:
+```brightscript
+sub test()
+  example = [
+    1,
+    2,
+  ]
+  if (1 = 1)
+    superFunction({
+      a: "a",
+      b: "b",
+      c: "c",
+    })
+  end if
+end sub
+
+sub another()
+  superFunction({})
+end sub
+```
+
+### @dazn/kopytko/missing-trailing-comma
+
+Enforces a trailing comma after every property of multiline associative array
+
+The `--fix` option on the command line can automatically fix some of the problems reported by this rule.
+
+Examples of **incorrect** code for this rule:
+```brightscript
+test = {
+  a: "a",
+  b: "b"
+}
+```
+
+Examples of **correct** code for this rule:
+```brightscript
+test = {
+  a: "a",
+  b: "b",
+}
+```
+
+### @dazn/kopytko/no-uninitialized-variables
+
+Check that all variables are declared.
+
+Examples of **incorrect** code for this rule:
+```brightscript
+sub a()
+  print(foo)
+end sub
+```
+
+Examples of **correct** code for this rule:
+```brightscript
+sub a()
+  foo = "bar"
+  print(foo)
+end sub
+```
+### @dazn/kopytko/sub-to-function
+
+Check that `sub` doesn't have a return type.
+
+Examples of **incorrect** code for this rule:
+```brightscript
+sub a() as Dynamic
+end sub
+```
+
+Examples of **correct** code for this rule:
+```brightscript
+sub a()
+  print("foo")
+end sub
+```
+
+### @dazn/kopytko/no-print
+
+Disallows the use of `print`.
+
+### @dazn/kopytko/no-stop
+
+Disallows the use of `stop`.

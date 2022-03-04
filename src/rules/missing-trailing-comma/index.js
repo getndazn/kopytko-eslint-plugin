@@ -2,17 +2,17 @@ const { messageId, meta } = require('./consts');
 
 const create = context => ({
   Property: (node) => {
-    isLastProperty = (node.parent.properties[node.parent.properties.length - 1] === node);
-    isObjectDefinedInSingleLine = (node.parent.loc.start.line == node.parent.loc.end.line);
+    const isLastProperty = (node.parent.properties[node.parent.properties.length - 1] === node);
+    const isObjectDefinedInSingleLine = (node.parent.loc.start.line === node.parent.loc.end.line);
 
     if (isLastProperty && isObjectDefinedInSingleLine) {
       return;
     }
 
-    sourceCodeText = context.getSourceCode().getText();
-    endOfPropertyIndex = node.range[1];
+    const sourceCodeText = context.getSourceCode().getText();
+    const endOfPropertyIndex = node.range[1];
 
-    hasTrailingComma = (sourceCodeText[endOfPropertyIndex] === ',');
+    const hasTrailingComma = (sourceCodeText[endOfPropertyIndex] === ',');
     if (hasTrailingComma) {
       return;
     }
