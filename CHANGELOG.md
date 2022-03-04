@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/getndazn/kopytko-eslint-plugin/compare/v2.0.0...v2.1.0) (2022-03-04)
+
+
+### Features
+
+* add new rules and update eslint dependencies ([#9](https://github.com/getndazn/kopytko-eslint-plugin/issues/9)) ([226fbdd](https://github.com/getndazn/kopytko-eslint-plugin/commit/226fbdd0c2cfb9016444815bd1fff0251291ba62))
+
 # [2.0.0](https://github.com/getndazn/kopytko-eslint-plugin/compare/v1.0.0...v2.0.0) (2021-12-21)
 
 
